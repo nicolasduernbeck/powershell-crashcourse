@@ -95,3 +95,61 @@ while ($counter -ne $arr.Length) {
     Write-Host $arr[$counter]  $counter
     $counter++
 }
+
+Do {
+    Write-Host $arr[$counter]  $counter
+    $counter++
+} While($counter -ne $arr.Length)
+
+$arr.Length
+
+function Write-Name() {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory)]
+        $Name
+    )
+    Write-Host "Hello ${name}"
+}
+
+Write-Name -Name "Test"
+
+Throw "trap"
+Write-Error -Message "trap" -ErrorAction Stop
+
+function Write-Something {
+    Write-Host "Something"
+    # throw 'something is wrong'
+}
+
+#Error - Handling
+try {
+    Write-Something
+} catch {
+    Write-Host 'catched'
+}
+
+New-Item -Path C:\Scripts\Scripts -ItemType "directory"
+New-Item -Path C:\Scripts\test1.txt -Type "file" -Value "test"
+Copy-Item C:\Scripts\test1.txt -Destination C:\Scripts\test2.txt
+
+for ($i = 1; $i -le 10; $i++) {
+    $filename = "test${i}.txt"
+    try {
+        New-Item -Path "C:\Scripts\${filename}" -ItemType "File"
+    } catch {
+        Write-Host "Could not create ${filename}"
+    }
+}
+
+$items = Get-ChildItem -Path 'C:\Scripts' 
+$items
+
+foreach ($item in $items) {
+    Remove-Item $item -Force
+}
+
+Test-Path "C:\Scripts"
+
+Set-Location 'C:\Scripts'
+Rename-Item -Path ".\test1.txt" -NewName "test.txt"
